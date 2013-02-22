@@ -1,4 +1,4 @@
-package Client;
+package Client_Test;
 
 import java.net.*;
 import java.io.*;
@@ -68,7 +68,9 @@ public class ChatClient implements Runnable
    }
    public static void main(String args[])
    {  ChatClient client = null;
-      
-         client = new ChatClient("localhost", 2233);
+      if (args.length != 2)
+         System.out.println("Usage: java ChatClient host port");
+      else
+         client = new ChatClient(args[0], Integer.parseInt(args[1]));
    }
 }

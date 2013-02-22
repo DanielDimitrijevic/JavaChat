@@ -1,4 +1,4 @@
-package Server;
+package Server_Test;
 
 public class JChatServer {
 	public static void main(String[] args){
