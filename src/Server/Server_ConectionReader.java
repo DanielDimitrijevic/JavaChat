@@ -27,7 +27,7 @@ public class Server_ConectionReader implements Runnable{
 		while (thread != null){
 			try{
 				System.out.println("Waiting for a client ..."); 
-				sc.addThread(server.accept()); 
+				sc.addClient(server.accept()); 
 			}catch(IOException ioe){
 				System.out.println("Server accept error: " + ioe); stop();
 			}
@@ -41,7 +41,7 @@ public class Server_ConectionReader implements Runnable{
    }
    public void stop()   {
 	   if (thread != null){
-		   thread.stop();
+		   thread.interrupt();
 	       thread = null;
 	   }
    }

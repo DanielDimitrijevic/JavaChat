@@ -4,9 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -18,7 +21,8 @@ public class Client_GUI extends JPanel{
 	private JList clientlist;
 	private Vector<String> listText;
 	private JTextArea chat;
-	private JTextField name;
+	private JTextField name,input;
+	private JButton rename, conect, dis;
 	
 	private Client_Controller cc;
 	
@@ -35,25 +39,65 @@ public class Client_GUI extends JPanel{
 		clientlist.setPreferredSize(new Dimension(100, 100));
 		this.add(new JScrollPane(clientlist),BorderLayout.WEST);
 		
-		JPanel p1 = new JPanel(new GridLayout(1,2));
+		JPanel p1 = new JPanel(new GridLayout(1,3));
 		p1.add(new JLabel("My Name:"));
 		name = new JTextField();
 		p1.add(name);
-		this.add(p1, BorderLayout.NORTH);
+		rename = new JButton("ändern");
+		p1.add(rename);
+		JPanel p2 = new JPanel(new GridLayout(1,2));
+		conect = new JButton("Verbinden");
+		p2.add(conect);
+		dis = new JButton("Trennen");
+		p2.add(dis);
+		JPanel p3 = new JPanel(new GridLayout(2,1));
+		p3.add(p2);
+		p3.add(p1);
+		this.add(p3, BorderLayout.NORTH);
 		
-		listText.add("Test1");
-		listText.add("Test2");
-		listText.add("Test3");
-		listText.add("Test4");
-		listText.add("Test5");
-		listText.add("Test6");
-		listText.add("Test7");
-		listText.add("Test8");
-		listText.add("Test9");
-		listText.add("Test10");
-		listText.add("Test11");
-		listText.add("Test12");
-		chat.setText("Test \n Test2 \n Test3 ");
+		conect.addActionListener(new ChatListener());
+		dis.addActionListener(new ChatListener());
+		rename.addActionListener(new ChatListener());
 		
+		input = new JTextField();
+		input.setEnabled(true);
+		input.addActionListener(new ChatListener());
+		this.add(input,BorderLayout.SOUTH);
+		
+		name.setText("New User");
+	}
+	
+	public void addMessage(String msg){
+		chat.setText(chat.getText() + msg + "\n");
+	}
+	
+	public void addUser(String name){
+		listText.add(name);
+	}
+	
+	public void remUser(String name){
+		listText.remove(name);
+	}
+	
+	class ChatListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if ( e.getSource() == input ) {
+				String message = input.getText();
+				if ( !message.equals("") ) {
+					cc.sendMessage( message);
+					input.setText("");
+				}
+			}
+			if ( e.getSource() == conect ){
+				cc.conect();
+			}
+			if ( e.getSource() == dis ){
+				cc.disconect();
+			}
+			if ( e.getSource() == rename ){
+				if(name.getText()!="")
+					cc.sendMessage("/nn "+ name.getText());
+			}
+		}
 	}
 }

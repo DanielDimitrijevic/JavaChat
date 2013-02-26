@@ -30,22 +30,23 @@ public class Server_GUI extends JPanel{
 		this.add(new JScrollPane(chat) ,BorderLayout.CENTER );
 		
 		clientlist = new JList(listText);
-		clientlist.setPreferredSize(new Dimension(100, 100));
+		clientlist.setPreferredSize(new Dimension(30, 30));
 		this.add(new JScrollPane(clientlist),BorderLayout.WEST);
 		
-		listText.add("Test1");
-		listText.add("Test2");
-		listText.add("Test3");
-		listText.add("Test4");
-		listText.add("Test5");
-		listText.add("Test6");
-		listText.add("Test7");
-		listText.add("Test8");
-		listText.add("Test9");
-		listText.add("Test10");
-		listText.add("Test11");
-		listText.add("Test12");
-		chat.setText("Test \n Test2 \n Test3 ");
 		
+	}
+	
+	public void addMessage(String msg, String from){
+		chat.setText(chat.getText() + from + ": " + msg + "\n");
+	}
+	public void addUser(String name){
+		listText.add(name);
+		this.repaint();
+	}
+	
+	public void remUser(String name){
+		listText.remove(name);
+	}
+	public void update(){
 	}
 }
