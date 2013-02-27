@@ -30,6 +30,8 @@ public class Server_Conection  extends Thread{
 			System.err.println(e.getMessage());
 		}
 		this.start();
+		sc.updateUser();
+		sc.guiUpdate();
 	}
 	public void run(){
 		System.out.println("Server Thread " + ID + " running.");
@@ -67,4 +69,7 @@ public class Server_Conection  extends Thread{
 			System.err.println(e.getMessage());
 		}
 	}
+	public int getID(){return this.ID;}
+	public String getUName(){return this.uname;}
+	public void setUName(String un){this.uname = un;}
 }

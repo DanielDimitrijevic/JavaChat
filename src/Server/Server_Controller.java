@@ -22,24 +22,49 @@ public class Server_Controller {
 	}
 	public void handle(int id, String txt){
 		if(txt.charAt(0) == '/'){
-			String [] s =txt.split(" ");
-			if(s[0] == "/nn"){
-				String name="";
-				for(int i = 1; i < s.length;i++)
-					name += s[i];
-				sg.addUser(name);
+			String [] s =txt.split(" ",2);
+			System.out.println(s[1]);
+			if(s[0].charAt(1)== 'n' && s[0].charAt(2)=='n'){
+				for(int i = 0; i < clients.size();i++){
+					if(id == clients.get(i).getID()){
+						clients.get(i).setUName(s[1]);
+						this.signalall(i);
+					}
+				}
+				sg.update();
 			}
 		}else{
-			sg.addMessage(txt, "Test1");
+			String name ="";
+			for(int i = 0; i < clients.size();i++)
+				if(clients.get(i).getID()==id)
+					name = clients.get(i).getUName();
 			for(int i = 0; i < clients.size();i++){
-				clients.get(i).sendMessage(txt);
+				clients.get(i).sendMessage(name + ":"+txt);
 			}
+			sg.addMessage(txt, name);
 		}
 	}
 	
 	public void remove(int id){
 		
 	}
+	public void updateUser(){
+		for(int i = 0;i < clients.size();i++){
+			for(int ii = 0; ii < clients.size();ii++){
+				clients.get(ii).sendMessage("/nn " + i + " "+ clients.get(i).getUName());
+			}
+		}
+	}
+	public void signalall(int id){
+		for(int i = 0; i < clients.size();i++){
+			clients.get(i).sendMessage("/nn " + id + " "+ clients.get(id).getUName());
+		}
+	}
+	public String getClientName(int id){
+		return clients.get(id).getUName();
+	}
+	public int getCleintLe(){return clients.size();}
+	public void guiUpdate(){sg.update();}
 	
 	public static void main(String[] args){
 		new Server_Controller();

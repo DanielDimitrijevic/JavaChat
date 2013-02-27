@@ -13,7 +13,16 @@ public class Client_Controller {
 	}
 	
 	public void handle(String msg){
-		cg.addMessage(msg);
+		if(msg.charAt(0) == '/'){
+			String [] s =msg.split(" ",3);
+			if(s[0].charAt(1)== 'n' && s[0].charAt(2)=='n'){
+				int id = Integer.parseInt(s[1]);
+				cg.addUser(id,s[2]);
+			}
+			
+		}else{
+			cg.addMessage(msg);
+		}
 	}
 	public void sendMessage(String msg){
 		cc.sendMessage(msg);
@@ -25,7 +34,6 @@ public class Client_Controller {
 		cc.stopCom();
 		cc = null;
 	}
-	
 	public static void main(String[] args){
 		new Client_Controller();
 	}
