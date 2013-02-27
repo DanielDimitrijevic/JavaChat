@@ -67,6 +67,10 @@ public class Client_GUI extends JPanel{
 		
 		name.setText("New User");
 		listText.addElement("");
+		
+		name.setEditable(false);
+		rename.setEnabled(false);
+		dis.setEnabled(false);
 	}
 	
 	public void addMessage(String msg){
@@ -98,9 +102,17 @@ public class Client_GUI extends JPanel{
 			}
 			if ( e.getSource() == conect ){
 				cc.conect();
+				name.setEditable(true);
+				dis.setEnabled(true);
+				rename.setEnabled(true);
+				conect.setEnabled(false);
 			}
 			if ( e.getSource() == dis ){
 				cc.disconect();
+				name.setEditable(false);
+				rename.setEnabled(false);
+				dis.setEnabled(false);
+				conect.setEnabled(true);
 			}
 			if ( e.getSource() == rename ){
 				if(name.getText()!="")

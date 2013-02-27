@@ -1,5 +1,6 @@
 package Server;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -32,6 +33,16 @@ public class Server_Controller {
 					}
 				}
 				sg.update();
+			}else if(s[0].charAt(1)=='e' && s[0].charAt(2)=='x' && s[0].charAt(3)=='i' && s[0].charAt(4)=='t'){
+				for(int i = 0; i < clients.size(); i++){
+					if(clients.get(i).getID() == id){
+						try {
+							clients.get(i).close();
+						} catch (IOException e) {
+							System.out.println("Verbindung konnte nicht beendet werden!");
+						}
+					}
+				}
 			}
 		}else{
 			String name ="";

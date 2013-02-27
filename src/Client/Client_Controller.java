@@ -31,6 +31,7 @@ public class Client_Controller {
 		cc = new Client_Conection("localhost",1234,this);
 	}
 	public void disconect(){
+		cc.sendMessage("/exit Conection");
 		cc.stopCom();
 		cc = null;
 	}

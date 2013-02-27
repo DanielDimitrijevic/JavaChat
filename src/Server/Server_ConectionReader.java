@@ -28,6 +28,8 @@ public class Server_ConectionReader implements Runnable{
 			try{
 				System.out.println("Waiting for a client ..."); 
 				sc.addClient(server.accept()); 
+				sc.updateUser();
+				sc.guiUpdate();
 			}catch(IOException ioe){
 				System.out.println("Server accept error: " + ioe); stop();
 			}

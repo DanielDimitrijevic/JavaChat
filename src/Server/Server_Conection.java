@@ -30,8 +30,6 @@ public class Server_Conection  extends Thread{
 			System.err.println(e.getMessage());
 		}
 		this.start();
-		sc.updateUser();
-		sc.guiUpdate();
 	}
 	public void run(){
 		System.out.println("Server Thread " + ID + " running.");
@@ -59,6 +57,7 @@ public class Server_Conection  extends Thread{
 		if (socket != null)    socket.close();
 		if (streamIn != null)  streamIn.close();
 		if (streamOut != null) streamOut.close();
+		this.stop();
 	}
 	
 	public void sendMessage(String msg){

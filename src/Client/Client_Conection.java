@@ -36,7 +36,7 @@ public class Client_Conection extends Thread{
 			if (streamIn   != null)  streamIn.close();
 			if (streamOut != null)  streamOut.close();
 			if (socket    != null)  socket.close();
-			interrupt();
+			stop();
 		}catch(IOException ioe){
 			System.out.println("Error closing ...");
 		}
