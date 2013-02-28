@@ -33,7 +33,7 @@ public class Server_Conection  extends Thread{
 	}
 	public void run(){
 		System.out.println("Server Thread " + ID + " running.");
-    	while (true){
+    	while (!this.interrupted()){
     		try {
     			  Thread.sleep(10);
     			}
@@ -57,6 +57,7 @@ public class Server_Conection  extends Thread{
 		if (socket != null)    socket.close();
 		if (streamIn != null)  streamIn.close();
 		if (streamOut != null) streamOut.close();
+		this.interrupt();
 		this.stop();
 	}
 	

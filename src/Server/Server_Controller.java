@@ -11,11 +11,14 @@ public class Server_Controller {
 	private MyFrame mf;
 	private ArrayList<Server_Conection> clients =new  ArrayList<Server_Conection>();
 	private Server_ConectionReader scr;
+	private Totengraeber t ;
 	
 	public Server_Controller(){
 		sg = new Server_GUI(this);
 		mf = new MyFrame(sg, "Server",true);
 		scr = new Server_ConectionReader(this,1234);
+		t = new Totengraeber(this);
+		t.start();
 	}
 	public void addClient(Socket socket){
 		System.out.println("Client accepted: " + socket);
@@ -34,15 +37,7 @@ public class Server_Controller {
 				}
 				sg.update();
 			}else if(s[0].charAt(1)=='e' && s[0].charAt(2)=='x' && s[0].charAt(3)=='i' && s[0].charAt(4)=='t'){
-				for(int i = 0; i < clients.size(); i++){
-					if(clients.get(i).getID() == id){
-						try {
-							clients.get(i).close();
-						} catch (IOException e) {
-							System.out.println("Verbindung konnte nicht beendet werden!");
-						}
-					}
-				}
+				t.add(id);
 			}
 		}else{
 			String name ="";
@@ -56,10 +51,13 @@ public class Server_Controller {
 		}
 	}
 	
-	public void remove(int id){
-		
+	public void remove(int index){
+		clients.remove(index);
 	}
 	public void updateUser(){
+		for(int i = 0; i < clients.size();i++){
+			clients.get(i).sendMessage("/uu uu uu");
+		}
 		for(int i = 0;i < clients.size();i++){
 			for(int ii = 0; ii < clients.size();ii++){
 				clients.get(ii).sendMessage("/nn " + i + " "+ clients.get(i).getUName());
@@ -75,6 +73,7 @@ public class Server_Controller {
 		return clients.get(id).getUName();
 	}
 	public int getCleintLe(){return clients.size();}
+	public ArrayList<Server_Conection> getClients(){return clients;}
 	public void guiUpdate(){sg.update();}
 	
 	public static void main(String[] args){

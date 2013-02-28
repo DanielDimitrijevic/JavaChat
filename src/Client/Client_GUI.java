@@ -90,6 +90,9 @@ public class Client_GUI extends JPanel{
 	public void remUser(String name){
 		listText.removeElement(name);
 	}
+	public void clearList(){
+		listText.clear();
+	}
 	
 	class ChatListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -113,6 +116,9 @@ public class Client_GUI extends JPanel{
 				rename.setEnabled(false);
 				dis.setEnabled(false);
 				conect.setEnabled(true);
+				clearList();
+				name.setText("New User");
+				chat.setText("");
 			}
 			if ( e.getSource() == rename ){
 				if(name.getText()!="")

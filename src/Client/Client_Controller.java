@@ -19,6 +19,9 @@ public class Client_Controller {
 				int id = Integer.parseInt(s[1]);
 				cg.addUser(id,s[2]);
 			}
+			if(s[0].charAt(1)== 'u' && s[0].charAt(2)=='u'){
+				cg.clearList();
+			}
 			
 		}else{
 			cg.addMessage(msg);

@@ -15,7 +15,7 @@ public class MyFrame extends JFrame{
 		this.setLayout(new BorderLayout());
 		this.add(sg);
 		this.setTitle(meinTitel);
-		this.setBounds(10, 10, 500, 500);
+		this.setBounds(100, 100, 500, 500);
 		if(close)
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE );
 		else

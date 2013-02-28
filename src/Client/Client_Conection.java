@@ -36,7 +36,7 @@ public class Client_Conection extends Thread{
 			if (streamIn   != null)  streamIn.close();
 			if (streamOut != null)  streamOut.close();
 			if (socket    != null)  socket.close();
-			stop();
+			interrupt();
 		}catch(IOException ioe){
 			System.out.println("Error closing ...");
 		}
@@ -54,7 +54,7 @@ public class Client_Conection extends Thread{
 	@Override
 	public void run() {
 		System.out.println("Client Thread  running.");
-    	while (true){
+    	while (!this.interrupted()){
     		try {
     			  Thread.sleep(10);
     			}
