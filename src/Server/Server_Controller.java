@@ -54,6 +54,11 @@ public class Server_Controller {
 	public void remove(int index){
 		clients.remove(index);
 	}
+	public void removeID(int id){
+		for(int i = 0; i < clients.size();i++)
+			if(clients.get(i).getID()== id)
+				clients.remove(i);
+	}
 	public void updateUser(){
 		for(int i = 0; i < clients.size();i++){
 			clients.get(i).sendMessage("/uu uu uu");

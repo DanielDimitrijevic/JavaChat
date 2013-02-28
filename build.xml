@@ -15,6 +15,7 @@
 		</fileset>
 	</path>
 		<target name="checkos">
+		<mkdir dir="recovery"/>
 		<copy todir="${lib.dir}">
 			<fileset dir="recovery" includes="*.jar">
 			</fileset>
@@ -99,13 +100,13 @@
 	</target>
 
 	<target name="start-server" depends="compile" description="Run server.">
-		<java classname="Server.Server_GUI" fork="true" classpathref="project.classpath">
+		<java classname="Server.Server_Controller" fork="true" classpathref="project.classpath">
 			<sysproperty value="java.policy" key="java.security.policy"></sysproperty>
 		</java>
 	</target>
 	
 	<target name="start-client" depends="compile" description="Run server.">
-		<java classname="Client.Client_GUI" fork="true" classpathref="project.classpath">
+		<java classname="Client.Client_Controller" fork="true" classpathref="project.classpath">
 			<sysproperty value="java.policy" key="java.security.policy"></sysproperty>
 		</java>
 	</target>

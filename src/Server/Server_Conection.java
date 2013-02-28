@@ -44,7 +44,7 @@ public class Server_Conection  extends Thread{
     				sc.handle(ID, streamIn.readLine());
     		}catch(Exception ioe){
     			System.out.println(ID + " ERROR reading: " + ioe.getMessage());
-	            sc.remove(ID);
+	            sc.removeID(ID);
 	            interrupt();
 	        }
     	}
@@ -58,7 +58,6 @@ public class Server_Conection  extends Thread{
 		if (streamIn != null)  streamIn.close();
 		if (streamOut != null) streamOut.close();
 		this.interrupt();
-		this.stop();
 	}
 	
 	public void sendMessage(String msg){
