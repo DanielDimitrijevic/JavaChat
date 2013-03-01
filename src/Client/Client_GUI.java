@@ -1,129 +1,125 @@
 package Client;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Vector;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import swing2swt.layout.BoxLayout;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormAttachment;
+import swing2swt.layout.BorderLayout;
+import org.eclipse.swt.custom.CBanner;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.TraverseListener;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-public class Client_GUI extends JPanel{
-	private JList clientlist;
-	private DefaultListModel<String> listText;
-	private JTextArea chat;
-	private JTextField name,input;
-	private JButton rename, conect, dis;
+public class Client_GUI {
+	private Shell sh;
+	private Text txtChat;
+	private Text text;
 	
-	private Client_Controller cc;
 	
-	public Client_GUI(Client_Controller cc){
-		this.cc = cc;
+	public Client_GUI(){
+		Display dis = new Display();
+		sh = new Shell(dis);
+		sh.setSize(500, 500);
+		sh.setLocation(100, 100);
+		sh.setText("Client");
+		sh.setLayout(new BorderLayout(0, 0));
 		
-		this.setLayout(new BorderLayout());
-		listText = new DefaultListModel<String>();
+		Menu menu = new Menu(sh, SWT.BAR);
+		sh.setMenuBar(menu);
 		
-		chat = new JTextArea();
-		this.add(new JScrollPane(chat) ,BorderLayout.CENTER );
+		MenuItem mntmDatei = new MenuItem(menu, SWT.CASCADE);
+		mntmDatei.setText("Datei");
 		
-		clientlist = new JList(listText);
-		clientlist.setPreferredSize(new Dimension(130, 100));
-		this.add(new JScrollPane(clientlist),BorderLayout.WEST);
+		Menu menu_1 = new Menu(mntmDatei);
+		mntmDatei.setMenu(menu_1);
 		
-		JPanel p1 = new JPanel(new GridLayout(1,3));
-		p1.add(new JLabel("My Name:"));
-		name = new JTextField();
-		p1.add(name);
-		rename = new JButton("ändern");
-		p1.add(rename);
-		JPanel p2 = new JPanel(new GridLayout(1,2));
-		conect = new JButton("Verbinden");
-		p2.add(conect);
-		dis = new JButton("Trennen");
-		p2.add(dis);
-		JPanel p3 = new JPanel(new GridLayout(2,1));
-		p3.add(p2);
-		p3.add(p1);
-		this.add(p3, BorderLayout.NORTH);
-		
-		conect.addActionListener(new ChatListener());
-		dis.addActionListener(new ChatListener());
-		rename.addActionListener(new ChatListener());
-		
-		input = new JTextField();
-		input.setEnabled(true);
-		input.addActionListener(new ChatListener());
-		this.add(input,BorderLayout.SOUTH);
-		
-		name.setText("New User");
-		listText.addElement("");
-		
-		name.setEditable(false);
-		rename.setEnabled(false);
-		dis.setEnabled(false);
-	}
-	
-	public void addMessage(String msg){
-		chat.setText(chat.getText() + msg + "\n");
-	}
-	
-	public void addUser(int id,String name){
-		if(listText.size()> id){
-			if(listText.get(id) != name){
-				listText.set(id,name);
+		MenuItem mntmEinstellungen = new MenuItem(menu_1, SWT.NONE);
+		mntmEinstellungen.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				
 			}
-		}else{
-			listText.addElement(name);
-		}
-	}
-	
-	public void remUser(String name){
-		listText.removeElement(name);
-	}
-	public void clearList(){
-		listText.clear();
-	}
-	
-	class ChatListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if ( e.getSource() == input ) {
-				String message = input.getText();
-				if ( !message.equals("") ) {
-					cc.sendMessage( message);
-					input.setText("");
-				}
+		});
+		mntmEinstellungen.setText("Einstellungen");
+		
+		MenuItem mntmBeenden = new MenuItem(menu_1, SWT.NONE);
+		mntmBeenden.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				
 			}
-			if ( e.getSource() == conect ){
-				cc.conect();
-				name.setEditable(true);
-				dis.setEnabled(true);
-				rename.setEnabled(true);
-				conect.setEnabled(false);
+		});
+		mntmBeenden.setText("Beenden");
+		
+		MenuItem mntmVerbundung = new MenuItem(menu, SWT.CASCADE);
+		mntmVerbundung.setText("Verbindung");
+		
+		Menu menu_2 = new Menu(mntmVerbundung);
+		mntmVerbundung.setMenu(menu_2);
+		
+		MenuItem mntmVerbinden = new MenuItem(menu_2, SWT.NONE);
+		mntmVerbinden.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				
 			}
-			if ( e.getSource() == dis ){
-				cc.disconect();
-				name.setEditable(false);
-				rename.setEnabled(false);
-				dis.setEnabled(false);
-				conect.setEnabled(true);
-				clearList();
-				name.setText("New User");
-				chat.setText("");
+		});
+		mntmVerbinden.setText("Verbinden");
+		
+		MenuItem mntmTrennen = new MenuItem(menu_2, SWT.NONE);
+		mntmTrennen.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				
 			}
-			if ( e.getSource() == rename ){
-				if(name.getText()!="")
-					cc.sendMessage("/nn "+ name.getText());
+		});
+		mntmTrennen.setText("Trennen");
+		
+		Composite composite = new Composite(sh, SWT.NONE);
+		composite.setLayoutData(BorderLayout.SOUTH);
+		composite.setLayout(new BorderLayout(0, 0));
+		
+		Button btnNewButton = new Button(composite, SWT.NONE);
+		btnNewButton.setLayoutData(BorderLayout.EAST);
+		btnNewButton.setText("New Button");
+		
+		text = new Text(composite, SWT.BORDER);
+		
+		
+		
+		
+		txtChat = new Text(sh, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+		txtChat.setText("Chat");
+		txtChat.setLayoutData(BorderLayout.CENTER);
+		
+		List list = new List(sh, SWT.BORDER | SWT.V_SCROLL);
+		list.setItems(new String[] {"User1usaha", "User2", "User3"});
+		list.setLayoutData(BorderLayout.EAST);
+		
+		for(int i = 0; i < 100; i++)
+        	list.add("User " + i);
+		sh.open();
+		while (!sh.isDisposed()) {
+			if (!dis.readAndDispatch()) {
+				dis.sleep();
 			}
-		}
+        }
 	}
 }

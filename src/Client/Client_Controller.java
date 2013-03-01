@@ -3,13 +3,14 @@ package Client;
 import Frame.MyFrame;
 
 public class Client_Controller {
-	private Client_GUI cg;
+	private Client_GUI_SWING cg;
+	private Client_GUI cgs;
 	private MyFrame mf;
 	private Client_Conection cc;
 	
 	public Client_Controller(){
-		cg = new Client_GUI(this);
-		mf = new MyFrame(cg, "Client",true);
+		cgs = new Client_GUI();
+		//mf = new MyFrame(cg, "Client",true);
 	}
 	
 	public void handle(String msg){
