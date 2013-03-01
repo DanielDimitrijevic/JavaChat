@@ -5,6 +5,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Button;
@@ -101,7 +103,12 @@ public class Client_GUI {
 		btnNewButton.setText("New Button");
 		
 		text = new Text(composite, SWT.BORDER);
-		
+		text.addListener(SWT.Dispose, new Listener() {
+		    public void handleEvent(Event event) {
+		        txtChat.setText(text.getText());
+		        System.out.println("Test");
+		    }
+		});
 		
 		
 		

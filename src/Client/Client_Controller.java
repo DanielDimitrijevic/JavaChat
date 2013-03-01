@@ -9,8 +9,8 @@ public class Client_Controller {
 	private Client_Conection cc;
 	
 	public Client_Controller(){
-		cgs = new Client_GUI();
-		//mf = new MyFrame(cg, "Client",true);
+		cg = new Client_GUI_SWING(this);
+		mf = new MyFrame(cg, "Client",true);
 	}
 	
 	public void handle(String msg){
