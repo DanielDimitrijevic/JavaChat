@@ -5,8 +5,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import Frame.MyFrame;
+import Interfaces.Controller;
 
-public class Server_Controller {
+public class Server_Controller implements Controller{
 	private Server_GUI sg;
 	private MyFrame mf;
 	private ArrayList<Server_Conection> clients =new  ArrayList<Server_Conection>();
@@ -83,5 +84,15 @@ public class Server_Controller {
 	
 	public static void main(String[] args){
 		new Server_Controller();
+	}
+	@Override
+	public void keyEvent() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void selectEvent(int id) {
+		// TODO Auto-generated method stub
+		
 	}
 }

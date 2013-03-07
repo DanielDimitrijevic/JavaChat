@@ -1,4 +1,4 @@
-package JavaChat.Client;
+package Client;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;

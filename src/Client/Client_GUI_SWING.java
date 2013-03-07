@@ -1,4 +1,4 @@
-package JavaChat.Client;
+package Client;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

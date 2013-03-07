@@ -1,4 +1,4 @@
-package JavaChat.Client;
+package Client;
 
 import java.net.*;
 import java.io.*;
@@ -61,7 +61,7 @@ public class Client_Conection extends Thread{
     			catch (InterruptedException e) {}
     		try{
     			if(streamIn.ready())
-    			cc.handle(streamIn.readLine());
+    			cc.handle(-1,streamIn.readLine());
     		}catch(IOException ioe){
     			System.out.println(" ERROR reading: " + ioe.getMessage());
 	            interrupt();
