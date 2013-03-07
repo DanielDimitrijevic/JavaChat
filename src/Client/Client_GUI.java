@@ -1,4 +1,4 @@
-package Client;
+package JavaChat.Client;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -10,11 +10,11 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import swing2swt.layout.BoxLayout;
+
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormAttachment;
-import swing2swt.layout.BorderLayout;
+
 import org.eclipse.swt.custom.CBanner;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Table;

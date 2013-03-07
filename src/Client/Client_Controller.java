@@ -1,4 +1,4 @@
-package Client;
+package JavaChat.Client;
 
 import Frame.MyFrame;
 
@@ -9,8 +9,8 @@ public class Client_Controller {
 	private Client_Conection cc;
 	
 	public Client_Controller(){
-		cgs = new Client_GUI();
-		//mf = new MyFrame(cg, "Client",true);
+		cg = new Client_GUI_SWING(this);
+		mf = new MyFrame(cg, "Client",true);
 	}
 	
 	public void handle(String msg){
@@ -32,7 +32,7 @@ public class Client_Controller {
 		cc.sendMessage(msg);
 	}
 	public void conect(){
-		cc = new Client_Conection("localhost",1234,this);
+		cc = new Client_Conection("10.0.5.190",1234,this);
 	}
 	public void disconect(){
 		cc.sendMessage("/exit Conection");
