@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="autofabrik" default="compile" basedir=".">
+<project name="JavaChat" default="compile" basedir=".">
 
 	<property name="src.dir" value="src" />
 	<property name="doc.dir" location="doc"/>
@@ -104,14 +104,16 @@
 	</target>
 
 	<target name="start-server" depends="compile" description="Run server.">
-		<java classname="Server.Server_Controller" fork="true" classpathref="project.classpath">
+		<java classname="Server.Server_Controller" fork="true" classpathref="project.classpath" >
 			<sysproperty value="java.policy" key="java.security.policy"></sysproperty>
+			<arg line="d"/>
 		</java>
 	</target>
 	
-	<target name="start-client" depends="compile" description="Run server.">
+	<target name="start-client"  depends="compile" description="Run server." >
 		<java classname="Client.Client_Controller" fork="true" classpathref="project.classpath">
 			<sysproperty value="java.policy" key="java.security.policy"></sysproperty>
+			<arg line="d"/>
 		</java>
 	</target>
 
