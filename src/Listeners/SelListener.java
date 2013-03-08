@@ -35,6 +35,10 @@ public class SelListener extends SelectionAdapter{
 				c.selectEvent(4);
 			}
 			break;
+			case "Button {ändern}": {
+				c.selectEvent(5);
+			}
+			break;
 		}
 	}
 }

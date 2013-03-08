@@ -16,6 +16,7 @@ public class Client_Controller implements Controller{
 		kl = new KeyListener(this);
 		sl = new SelListener(this);
 		cg = new Client_GUI(this,kl,sl);
+		cg.open();
 	}
 	
 	public void handle(int id, String msg){
@@ -50,8 +51,12 @@ public class Client_Controller implements Controller{
 
 	@Override
 	public void keyEvent() {
-		// TODO Auto-generated method stub
-		
+		if(cg.getInput().charAt(0)=='/')
+			cg.addMessage("Bite keine Befehle eingeben!");
+		else{
+			cc.sendMessage(cg.getInput());
+			cg.setInput("");
+		}
 	}
 
 	@Override
@@ -67,7 +72,7 @@ public class Client_Controller implements Controller{
 		}
 		break;
 		case 1: {
-			//this.conect();
+			this.conect();
 			cg.con();
 		}
 		break;
@@ -83,6 +88,10 @@ public class Client_Controller implements Controller{
 		case 4: {
 			this.disconect();
 			System.exit(0);
+		}
+		break;
+		case 5: {
+			cc.sendMessage("/nn " + cg.getName());
 		}
 		break;
 		}

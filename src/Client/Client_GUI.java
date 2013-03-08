@@ -1,9 +1,12 @@
 package Client;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.List;
@@ -48,12 +51,18 @@ public class Client_GUI  implements GUI{
 	private Text name;
 	private Button aendern,send;
 	private MenuItem conect,discon;
+	private Display dis;
+	private String chatt;
+	private ArrayList<String> clients = new ArrayList<String>();
+	private boolean chata = false, lista = false;
 	
 	public Client_GUI(Client_Controller c, KeyListener kl, SelListener sl){
 		this.c = c;
 		this.kl = kl;
 		this.sl = sl;
-		Display dis = new Display();
+		
+		
+		dis = new Display();
 		sh = new Shell(dis);
 		sh.setSize(500, 500);
 		sh.setLocation(100, 100);
@@ -151,15 +160,15 @@ public class Client_GUI  implements GUI{
 		lblName.setLayoutData(fd_lblName);
 		lblName.setText("Name:");
 		discon.addSelectionListener(sl);
+		chatt = "";
+		
+		
+		
 		
 //		for(int i = 0; i < 100; i++)
 //        	list.add("User " + i);
 		this.discon();
 		sh.open();
-		while (!sh.isDisposed ()) {
-			if (!dis.readAndDispatch ()) dis.sleep ();
-		}
-		dis.dispose ();
 	}
 
 	@Override
@@ -174,25 +183,30 @@ public class Client_GUI  implements GUI{
 	}
 	
 	public void addMessage(String msg){
-		chat.setText(chat.getText() + msg + "\n");
+		chatt += msg + "\n";
+		chata=true;
 	}
 	
 	public void addUser(int id,String name){
-		if(list.getItemCount() > id){
-			if(list.getItem(id) != name){
-				list.setItem(id,name);
+		if(clients.size() > id){
+			if(clients.get(id) != name){
+				clients.set(id,name);
 			}
 		}else{
-			list.add(name);
+			clients.add(name);
 		}
+		lista=true;
 	}
 	
 	public void remUser(String name){
-		list.remove(name);
+		clients.remove(name);
+		lista=true;
 	}
 	public void clearList(){
-		list.removeAll();
+		clients.clear();
+		lista = true;
 	}
+	
 	
 	public void discon(){
 		discon.setEnabled(false);
@@ -201,6 +215,9 @@ public class Client_GUI  implements GUI{
 		aendern.setEnabled(false);
 		input.setEditable(false);
 		send.setEnabled(false);
+		chat.setText("");
+		name.setText("New User");
+		list.add("Test");
 	}
 	public void con(){
 		discon.setEnabled(true);
@@ -209,5 +226,27 @@ public class Client_GUI  implements GUI{
 		aendern.setEnabled(true);
 		input.setEditable(true);
 		send.setEnabled(true);
+	}
+	public String getName(){
+		return name.getText();
+	}
+
+	public void open() {
+		
+		while (!sh.isDisposed () ) {
+			if (!dis.readAndDispatch ()) dis.sleep ();
+			if(lista){
+				list.removeAll();
+				for(int i = 0; i < clients.size();i++){
+					list.add(clients.get(i));
+				}
+				lista=false;
+			}
+			if(chata){
+				chat.setText(chatt);
+				chata=false;
+			}
+		}
+		dis.dispose ();
 	}
 }
