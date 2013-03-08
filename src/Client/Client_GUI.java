@@ -42,7 +42,7 @@ public class Client_GUI  implements GUI{
 	private Display dis;
 	private String chatt;
 	private ArrayList<String> clients = new ArrayList<String>();
-	private boolean chata = false, lista = false;
+	private boolean chata = false, lista = false, disex = false;
 	
 	public Client_GUI(Client_Controller c, KeyListener kl, SelListener sl,WindowListener wl){
 		this.c = c;
@@ -235,6 +235,9 @@ public class Client_GUI  implements GUI{
 		list.setForeground(c);
 		name.setForeground(c);
 	}
+	public void diconex(){
+		disex = true;
+	}
 	public void open() {
 		
 		while (!sh.isDisposed () ) {
@@ -249,6 +252,10 @@ public class Client_GUI  implements GUI{
 			if(chata){
 				chat.setText(chatt);
 				chata=false;
+			}
+			if(disex){
+				this.discon();
+				disex=false;
 			}
 		}
 		dis.dispose ();

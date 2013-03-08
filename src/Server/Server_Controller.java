@@ -26,7 +26,7 @@ public class Server_Controller implements Controller{
 		sl = new SelListener(this);
 		wl = new WindowListener(this);
 		sg = new Server_GUI(this,kl,sl,wl);
-		scr = new Server_ConectionReader(this,port);
+		scr = new Server_ConectionReader(this,this.port);
 		t = new Totengraeber(this);
 		t.start();
 		sg.open();
@@ -35,17 +35,27 @@ public class Server_Controller implements Controller{
 		System.out.println("Client accepted: " + socket);
 		clients.add(new Server_Conection(this,socket));
 	}
+	
+	
+	
 	public void handle(int id, String txt){
 		if(txt.charAt(0) == '/'){
 			String [] s =txt.split(" ",2);
 			//System.out.println(s[1]);
 			if(s[0].charAt(1)== 'n' && s[0].charAt(2)=='n'){
+				int tempid = -100;
+				boolean acc = true;
 				for(int i = 0; i < clients.size();i++){
+					if(clients.get(i).getUName().equals(s[1]))
+						acc = false;
 					if(id == clients.get(i).getID()){
-						clients.get(i).setUName(s[1]);
-						this.signalall(i);
-						this.guiUpdate();
+						tempid = i;
 					}
+				}
+				if(acc){
+					clients.get(tempid).setUName(s[1]);
+					this.signalall(tempid);
+					this.guiUpdate();
 				}
 			}else if(s[0].charAt(1)=='e' && s[0].charAt(2)=='x' && s[0].charAt(3)=='i' && s[0].charAt(4)=='t'){
 				this.sendOne("/exit", id);
@@ -55,11 +65,20 @@ public class Server_Controller implements Controller{
 			String name ="";
 			for(int i = 0; i < clients.size();i++)
 				if(clients.get(i).getID()==id)
-					name = clients.get(i).getUName();
-			this.sendAll(txt, name);
-			sg.addMessage(txt, name);
+					if(clients.get(i).getUName().equals("New User"))
+						clients.get(i).sendMessage("ERROR: New User hat kein Schreibrecht bitte namen ändern!");
+					else
+						name = clients.get(i).getUName();
+			if(name != ""){
+				this.sendAll(txt, name);
+				sg.addMessage(txt, name);
+			}
 		}
 	}
+	
+	
+	
+	
 	public void sendAll(String msg,String name){
 		for(int i = 0; i < clients.size();i++){
 			clients.get(i).sendMessage(name + ":"+msg);
@@ -121,22 +140,36 @@ public class Server_Controller implements Controller{
 			System.out.println("No valid Ipaddress or port\n <port> | Serverport angeben \n d | default werte verwenden (1234)");
 		
 	}
+	public void kick(String name){
+		for(int i = 0; i < clients.size(); i++){
+			if(clients.get(i).getUName() == name){
+				this.sendOne("/exit", clients.get(i).getID());
+				t.add(clients.get(i).getID());
+			}
+		}
+	}
 	@Override
 	public void keyEvent() {
 		if(sg.getInput().charAt(0)=='/')
-			sg.addMessage("Bite keine Befehle eingeben!" ,"Error");
+			if(sg.getInput().charAt(1)=='k' && sg.getInput().charAt(2)=='i' && sg.getInput().charAt(3)=='c' && sg.getInput().charAt(4)=='k' && sg.getInput().charAt(5)==' ')
+				this.kick(sg.getInput().split(" ", 2)[1]);
+			else	
+				sg.addMessage("Bite keine Befehle eingeben!" ,"Error");
 		else{
 			this.sendAll(sg.getInput(), "Server");
 			sg.addMessage(sg.getInput(), "Server");
-			sg.setInput("");
 		}
+		sg.setInput("");
 	}
 	@Override
 	public void selectEvent(int id) {
 		switch (id) {
 		case 0: {
 			if(sg.getInput().charAt(0)=='/')
-				sg.addMessage("Bite keine Befehle eingeben!" ,"Error");
+				if(sg.getInput().charAt(1)=='k' && sg.getInput().charAt(2)=='i' && sg.getInput().charAt(3)=='c' && sg.getInput().charAt(4)=='k' && sg.getInput().charAt(5)==' ')
+					this.kick(sg.getInput().split(" ", 2)[1]);
+				else	
+					sg.addMessage("Bite keine Befehle eingeben!" ,"Error");
 			else{
 				this.sendAll(sg.getInput(), "Server");
 				sg.addMessage(sg.getInput(), "Server");

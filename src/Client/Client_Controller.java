@@ -39,7 +39,9 @@ public class Client_Controller implements Controller{
 				cg.clearList();
 			}
 			if(s[0].charAt(1)=='e' && s[0].charAt(2)=='x' && s[0].charAt(3)=='i' && s[0].charAt(4)=='t'){
+				System.out.println("Exit!");
 				this.disconecte();
+				cg.diconex();
 			}
 			
 		}else{
@@ -53,6 +55,7 @@ public class Client_Controller implements Controller{
 		cc = new Client_Conection(addr,port,this);
 	}
 	public void disconect(){
+		if(cc != null)
 		cc.sendMessage("/exit Conection");
 	}
 	public void disconecte(){
