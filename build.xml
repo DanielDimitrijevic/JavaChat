@@ -6,8 +6,7 @@
 	<property name="build.dir" value="bin" />
 	<property name="lib.dir" value="lib" />
 	<property name="id" value="default" />
-	<property name="delay" value="500" />		
-	
+
 	<path id="project.classpath">
 			<pathelement location="${build.dir}" />
 		<fileset dir="${lib.dir}">	
@@ -124,7 +123,6 @@
 			</copy>
 	</target>
 
-	
 	<!-- Generate javadocs for current project into ${doc.dir} -->
 	<target name="create-doc" depends="compile" description="generate documentation">
 		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" />
