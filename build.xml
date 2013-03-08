@@ -61,6 +61,11 @@
 			</copy>
 			<delete dir="${lib.dir}"/>
 			<mkdir dir="${lib.dir}"/>
+			
+			<copy todir="recovery">
+			<fileset dir="${lib.dir}" includes="*.jar">
+			</fileset>
+			</copy>
 	</target>
 
 	<target name="if_windows" depends="checkos" if="isWindows">
@@ -93,7 +98,7 @@
 	</target>
 
 	
-	<target name="compile" depends="checkos,if_windows,if_unix,if_mac" description="Compile project.">
+	<target name="compile"  description="Compile project.">
 		<mkdir dir="${build.dir}" />
 		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="project.classpath" debug="true" deprecation="true" includeantruntime="false" />
 	</target>
@@ -110,12 +115,6 @@
 		</java>
 	</target>
 
-	<target name="run-assembly" depends="compile" description="Run assembly.">
-		<java classname="fabrik.rmi.roboter.MontageRoboter" fork="true" classpathref="project.classpath">
-			<arg value="${id}" />
-			<arg value="${delay}" />
-		</java>
-	</target>
 	<target name="recovery" description="lib recovery">
 		<copy todir="${lib.dir}">
 			<fileset dir="recovery" includes="*.jar">
