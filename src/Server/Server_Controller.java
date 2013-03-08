@@ -6,20 +6,30 @@ import java.util.ArrayList;
 
 import Frame.MyFrame;
 import Interfaces.Controller;
+import Listeners.KeyListener;
+import Listeners.SelListener;
+import Listeners.WindowListener;
 
 public class Server_Controller implements Controller{
 	private Server_GUI sg;
-	private MyFrame mf;
 	private ArrayList<Server_Conection> clients =new  ArrayList<Server_Conection>();
 	private Server_ConectionReader scr;
 	private Totengraeber t ;
+	private int port;
+	private KeyListener kl;
+	private SelListener sl;
+	private WindowListener wl;
 	
-	public Server_Controller(){
-		sg = new Server_GUI(this);
-		mf = new MyFrame(sg, "Server",true);
-		scr = new Server_ConectionReader(this,1234);
+	public Server_Controller(int port){
+		this.port = port;
+		kl = new KeyListener(this);
+		sl = new SelListener(this);
+		wl = new WindowListener(this);
+		sg = new Server_GUI(this,kl,sl,wl);
+		scr = new Server_ConectionReader(this,port);
 		t = new Totengraeber(this);
 		t.start();
+		sg.open();
 	}
 	public void addClient(Socket socket){
 		System.out.println("Client accepted: " + socket);
@@ -28,16 +38,17 @@ public class Server_Controller implements Controller{
 	public void handle(int id, String txt){
 		if(txt.charAt(0) == '/'){
 			String [] s =txt.split(" ",2);
-			System.out.println(s[1]);
+			//System.out.println(s[1]);
 			if(s[0].charAt(1)== 'n' && s[0].charAt(2)=='n'){
 				for(int i = 0; i < clients.size();i++){
 					if(id == clients.get(i).getID()){
 						clients.get(i).setUName(s[1]);
 						this.signalall(i);
+						this.guiUpdate();
 					}
 				}
-				sg.update();
 			}else if(s[0].charAt(1)=='e' && s[0].charAt(2)=='x' && s[0].charAt(3)=='i' && s[0].charAt(4)=='t'){
+				this.sendOne("/exit", id);
 				t.add(id);
 			}
 		}else{
@@ -45,13 +56,21 @@ public class Server_Controller implements Controller{
 			for(int i = 0; i < clients.size();i++)
 				if(clients.get(i).getID()==id)
 					name = clients.get(i).getUName();
-			for(int i = 0; i < clients.size();i++){
-				clients.get(i).sendMessage(name + ":"+txt);
-			}
+			this.sendAll(txt, name);
 			sg.addMessage(txt, name);
 		}
 	}
-	
+	public void sendAll(String msg,String name){
+		for(int i = 0; i < clients.size();i++){
+			clients.get(i).sendMessage(name + ":"+msg);
+		}
+	}
+	public void sendOne(String msg,int id){
+		for(int i = 0; i < clients.size();i++){
+			if(clients.get(i).getID() == id)
+				clients.get(i).sendMessage(msg);
+		}
+	}
 	public void remove(int index){
 		clients.remove(index);
 	}
@@ -80,19 +99,59 @@ public class Server_Controller implements Controller{
 	}
 	public int getCleintLe(){return clients.size();}
 	public ArrayList<Server_Conection> getClients(){return clients;}
-	public void guiUpdate(){sg.update();}
-	
+	public void guiUpdate(){
+		sg.clearList();
+		for(int i = 0; i < clients.size(); i++){
+			sg.addUser(i, clients.get(i).getUName());
+		}
+	}
 	public static void main(String[] args){
-		new Server_Controller();
+		boolean a =true;
+		if(args.length > 0){
+			if(args[0].charAt(0)=='d'){
+				a=false;
+				new Server_Controller(1234);
+			}else { 
+				a=false;
+				new Server_Controller(Integer.parseInt(args[0]));
+				
+			}
+		}
+		if(a)
+			System.out.println("No valid Ipaddress or port\n <port> | Serverport angeben \n d | default werte verwenden (1234)");
+		
 	}
 	@Override
 	public void keyEvent() {
-		// TODO Auto-generated method stub
-		
+		if(sg.getInput().charAt(0)=='/')
+			sg.addMessage("Bite keine Befehle eingeben!" ,"Error");
+		else{
+			this.sendAll(sg.getInput(), "Server");
+			sg.addMessage(sg.getInput(), "Server");
+			sg.setInput("");
+		}
 	}
 	@Override
 	public void selectEvent(int id) {
-		// TODO Auto-generated method stub
-		
+		switch (id) {
+		case 0: {
+			if(sg.getInput().charAt(0)=='/')
+				sg.addMessage("Bite keine Befehle eingeben!" ,"Error");
+			else{
+				this.sendAll(sg.getInput(), "Server");
+				sg.addMessage(sg.getInput(), "Server");
+				sg.setInput("");
+			}
+		}
+		break;
+		}
+	}
+	@Override
+	public void disconect() {
+		this.sendAll("d", "/exit ");
+		for(int i = 0; i < clients.size();i++){
+			t.add(clients.get(i).getID());
+		}
+		scr.stop();
 	}
 }

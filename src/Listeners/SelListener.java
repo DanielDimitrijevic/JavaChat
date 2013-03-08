@@ -13,7 +13,7 @@ public class SelListener extends SelectionAdapter{
 	
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		System.out.println(e.toString());
+		//System.out.println(e.toString());
 		switch (e.widget.toString()) {
 			case "Button {Senden}": {
 				c.selectEvent(0);
@@ -37,6 +37,26 @@ public class SelListener extends SelectionAdapter{
 			break;
 			case "Button {ändern}": {
 				c.selectEvent(5);
+			}
+			break;
+			case "MenuItem {Blau}": {
+				c.selectEvent(100);
+			}
+			break;
+			case "MenuItem {Rot}": {
+				c.selectEvent(101);
+			}
+			break;
+			case "MenuItem {Grün}": {
+				c.selectEvent(102);
+			}
+			break;
+			case "MenuItem {Gelb}": {
+				c.selectEvent(103);
+			}
+			break;
+			case "MenuItem {Schwarz}": {
+				c.selectEvent(104);
 			}
 			break;
 		}

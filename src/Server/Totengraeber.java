@@ -23,7 +23,6 @@ public class Totengraeber extends Thread{
 							c.remove(i);
 							todeleat.remove(0);
 							c.updateUser();
-							c.guiUpdate();
 						}
 			}
 		} catch (IOException e) {

@@ -4,40 +4,27 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormAttachment;
 
-import org.eclipse.swt.custom.CBanner;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.TraverseListener;
-import org.eclipse.swt.events.TraverseEvent;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 
 import Interfaces.Controller;
 import Interfaces.GUI;
 import Listeners.KeyListener;
 import Listeners.SelListener;
+import Listeners.WindowListener;
 
-import swing2swt.layout.BorderLayout;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
+//import org.eclipse.wb.swt.SWTResourceManager;
 
 public class Client_GUI  implements GUI{
 	private Shell sh;
@@ -48,6 +35,7 @@ public class Client_GUI  implements GUI{
 	private Controller c;
 	private KeyListener kl;
 	private SelListener sl;
+	private WindowListener wl;
 	private Text name;
 	private Button aendern,send;
 	private MenuItem conect,discon;
@@ -56,11 +44,11 @@ public class Client_GUI  implements GUI{
 	private ArrayList<String> clients = new ArrayList<String>();
 	private boolean chata = false, lista = false;
 	
-	public Client_GUI(Client_Controller c, KeyListener kl, SelListener sl){
+	public Client_GUI(Client_Controller c, KeyListener kl, SelListener sl,WindowListener wl){
 		this.c = c;
 		this.kl = kl;
 		this.sl = sl;
-		
+		this.wl = wl;
 		
 		dis = new Display();
 		sh = new Shell(dis);
@@ -68,6 +56,7 @@ public class Client_GUI  implements GUI{
 		sh.setLocation(100, 100);
 		sh.setText("Client");
 		sh.setLayout(new FormLayout());
+		sh.addShellListener(wl);
 		
 		input = new Text(sh, SWT.BORDER);
 		input.addKeyListener(kl);
@@ -105,20 +94,6 @@ public class Client_GUI  implements GUI{
 		Menu menu = new Menu(sh, SWT.BAR);
 		sh.setMenuBar(menu);
 		
-		MenuItem mntmDatei = new MenuItem(menu, SWT.CASCADE);
-		mntmDatei.setText("Datei");
-		
-		Menu menu_1 = new Menu(mntmDatei);
-		mntmDatei.setMenu(menu_1);
-		
-		MenuItem prop = new MenuItem(menu_1, SWT.NONE);
-		prop.setText("Einstellungen");
-		prop.addSelectionListener(sl);
-		
-		MenuItem exit = new MenuItem(menu_1, SWT.NONE);
-		exit.setText("Beenden");
-		exit.addSelectionListener(sl);
-		
 		MenuItem mntmVerbindung = new MenuItem(menu, SWT.CASCADE);
 		mntmVerbindung.setText("Verbindung");
 		
@@ -131,6 +106,28 @@ public class Client_GUI  implements GUI{
 		
 		discon = new MenuItem(menu_2, SWT.NONE);
 		discon.setText("Trennen");
+		
+		MenuItem mntmFarbe = new MenuItem(menu, SWT.CASCADE);
+		mntmFarbe.setText("Farbe");
+		
+		Menu menu_1 = new Menu(mntmFarbe);
+		mntmFarbe.setMenu(menu_1);
+		
+		MenuItem mntmBlau = new MenuItem(menu_1, SWT.NONE);
+		mntmBlau.setText("Blau");
+		mntmBlau.addSelectionListener(sl);
+		
+		MenuItem mntmRot = new MenuItem(menu_1, SWT.NONE);
+		mntmRot.setText("Rot");
+		mntmRot.addSelectionListener(sl);
+		
+		MenuItem mntmGrn = new MenuItem(menu_1, SWT.NONE);
+		mntmGrn.setText("Gr\u00FCn");
+		mntmGrn.addSelectionListener(sl);
+		
+		MenuItem mntmSchwarz = new MenuItem(menu_1, SWT.NONE);
+		mntmSchwarz.setText("Schwarz");
+		mntmSchwarz.addSelectionListener(sl);
 		
 		name = new Text(sh, SWT.BORDER);
 		FormData fd_name = new FormData();
@@ -150,7 +147,7 @@ public class Client_GUI  implements GUI{
 		
 		Label lblName = new Label(sh, SWT.NONE);
 		fd_name.left = new FormAttachment(lblName, 6);
-		lblName.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
+		//lblName.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblName.setAlignment(SWT.CENTER);
 		FormData fd_lblName = new FormData();
 		fd_lblName.left = new FormAttachment(0, 10);
@@ -217,7 +214,9 @@ public class Client_GUI  implements GUI{
 		send.setEnabled(false);
 		chat.setText("");
 		name.setText("New User");
-		list.add("Test");
+		list.removeAll();
+		chatt = "";
+		clients.clear();
 	}
 	public void con(){
 		discon.setEnabled(true);
@@ -230,7 +229,12 @@ public class Client_GUI  implements GUI{
 	public String getName(){
 		return name.getText();
 	}
-
+	public void setColor(Color c){
+		chat.setForeground(c);
+		input.setForeground(c);
+		list.setForeground(c);
+		name.setForeground(c);
+	}
 	public void open() {
 		
 		while (!sh.isDisposed () ) {
