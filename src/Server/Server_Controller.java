@@ -1,6 +1,5 @@
 package Server;
 
-import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -40,7 +39,6 @@ public class Server_Controller implements Controller{
 	public void handle(int id, String txt){
 		if(txt.charAt(0) == '/'){
 			String [] s =txt.split(" ",2);
-			//System.out.println(s[1]);
 			if(s[0].charAt(1)== 'n' && s[0].charAt(2)=='n'){
 				int tempid = -100;
 				boolean acc = true;

@@ -128,6 +128,10 @@ public class Server_GUI  implements GUI{
 		clients.clear();
 		lista = true;
 	}
+	public void setchanges(){
+		lista = true;
+		chata = true;
+	}
 	
 	
 	public void discon(){

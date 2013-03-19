@@ -4,7 +4,6 @@ package Client;
 import org.eclipse.swt.graphics.Color;
 
 import Interfaces.Controller;
-import Interfaces.GUI;
 import Listeners.KeyListener;
 import Listeners.SelListener;
 import Listeners.WindowListener;
