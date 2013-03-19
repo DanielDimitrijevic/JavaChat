@@ -113,7 +113,8 @@
 	<target name="start-client"  depends="compile" description="Run server." >
 		<java classname="Client.Client_Controller" fork="true" classpathref="project.classpath">
 			<sysproperty value="java.policy" key="java.security.policy"></sysproperty>
-			<arg line="d"/>
+			<arg line="10.0.0.3"/>
+			<arg line="1234"/>
 		</java>
 	</target>
 

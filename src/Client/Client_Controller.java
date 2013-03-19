@@ -68,7 +68,7 @@ public class Client_Controller implements Controller{
 			if(args[0].charAt(0)=='d'){
 				a=false;
 				new Client_Controller("localhost",1234);
-			}else { 
+			}else if(args.length >1){ 
 				a=false;
 				new Client_Controller(args[0],Integer.parseInt(args[1]));
 			}
