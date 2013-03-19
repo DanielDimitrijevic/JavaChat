@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import Server_Test.ConectedClient;
 
 public class Server_ConectionReader implements Runnable{
 	private Server_Controller sc;
