@@ -19,7 +19,11 @@ import Listeners.KeyListener;
 import Listeners.SelListener;
 import Listeners.WindowListener;
 
-
+/**
+ * GUI
+ * @author Dominik
+ *
+ */
 public class Server_GUI  implements GUI{
 	private Shell sh;
 	private Text input;
@@ -35,7 +39,13 @@ public class Server_GUI  implements GUI{
 	private String chatt;
 	private ArrayList<String> clients = new ArrayList<String>();
 	private boolean chata = false, lista = false;
-	
+	/**
+	 * Konstruktor
+	 * @param c
+	 * @param kl
+	 * @param sl
+	 * @param wl
+	 */
 	public Server_GUI(Server_Controller c, KeyListener kl, SelListener sl,WindowListener wl){
 		this.c = c;
 		this.kl = kl;
@@ -92,23 +102,35 @@ public class Server_GUI  implements GUI{
 		this.discon();
 		sh.open();
 	}
-
+	/**
+	 * Gibt den Inhalt des EIngabefelds zurück
+	 */
 	@Override
 	public String getInput() {
 		return input.getText();
 	}
-
+	/**
+	 * Setzt den Inhalt des Eingabefelds
+	 */
 	@Override
 	public void setInput(String t) {
 		input.setText(t);
 		
 	}
-	
+	/**
+	 * Fügt Nachricht den Chat hinzu
+	 * @param msg
+	 * @param name
+	 */
 	public void addMessage(String msg,String name){
 		chatt +=name + ":" +msg + "\n";
 		chata=true;
 	}
-	
+	/**
+	 * User Hinzufügen
+	 * @param id
+	 * @param name
+	 */
 	public void addUser(int id,String name){
 		if(clients.size() > id){
 			if(clients.get(id) != name){
@@ -119,17 +141,25 @@ public class Server_GUI  implements GUI{
 		}
 		lista=true;
 	}
-	
+	/**
+	 * User Löschen
+	 * @param name
+	 */
 	public void remUser(String name){
 		clients.remove(name);
 		lista=true;
 	}
+	/**
+	 * CLientListe leeren
+	 */
 	public void clearList(){
 		clients.clear();
 		lista = true;
 	}
 	
-	
+	/**
+	 * Disconect
+	 */
 	public void discon(){
 //		input.setEditable(false);
 //		send.setEnabled(false);
@@ -138,6 +168,9 @@ public class Server_GUI  implements GUI{
 		chatt ="";
 		clients.clear();
 	}
+	/**
+	 * Öfnet das Fenster
+	 */
 	public void open() {
 		
 		while (!sh.isDisposed () ) {

@@ -8,7 +8,11 @@ import Interfaces.Controller;
 import Listeners.KeyListener;
 import Listeners.SelListener;
 import Listeners.WindowListener;
-
+/**
+ * Erlabut die Komunkation von Controller und GUI
+ * @author Dominik
+ *
+ */
 public class Server_Controller implements Controller{
 	private Server_GUI sg;
 	private ArrayList<Server_Conection> clients =new  ArrayList<Server_Conection>();
@@ -19,6 +23,10 @@ public class Server_Controller implements Controller{
 	private SelListener sl;
 	private WindowListener wl;
 	
+	/**
+	 * Konstrukter
+	 * @param port
+	 */
 	public Server_Controller(int port){
 		this.port = port;
 		kl = new KeyListener(this);
@@ -30,13 +38,19 @@ public class Server_Controller implements Controller{
 		t.start();
 		sg.open();
 	}
+	/**
+	 * Fügt Client der Conection Liste hinzu
+	 * @param socket
+	 */
 	public void addClient(Socket socket){
 		System.out.println("Client accepted: " + socket);
 		clients.add(new Server_Conection(this,socket));
 	}
 	
 	
-	
+	/**
+	 * Gibt an was geschieht wenn eine Nachricht eingeht
+	 */
 	public void handle(int id, String txt){
 		if(txt.charAt(0) == '/'){
 			String [] s =txt.split(" ",2);
@@ -77,26 +91,46 @@ public class Server_Controller implements Controller{
 	
 	
 	
-	
+	/**
+	 * Sendet Nachrichten an Alle
+	 * @param msg
+	 * @param name
+	 */
 	public void sendAll(String msg,String name){
 		for(int i = 0; i < clients.size();i++){
 			clients.get(i).sendMessage(name + ":"+msg);
 		}
 	}
+	/**
+	 * Sende Nachrichten an einen
+	 * @param msg
+	 * @param id
+	 */
 	public void sendOne(String msg,int id){
 		for(int i = 0; i < clients.size();i++){
 			if(clients.get(i).getID() == id)
 				clients.get(i).sendMessage(msg);
 		}
 	}
+	/**
+	 * Lösche einen CLient aus der Liste
+	 * @param index
+	 */
 	public void remove(int index){
 		clients.remove(index);
 	}
+	/**
+	 * Lösche Client anhand von PortID
+	 * @param id
+	 */
 	public void removeID(int id){
 		for(int i = 0; i < clients.size();i++)
 			if(clients.get(i).getID()== id)
 				clients.remove(i);
 	}
+	/**
+	 * Update UserListe
+	 */
 	public void updateUser(){
 		for(int i = 0; i < clients.size();i++){
 			clients.get(i).sendMessage("/uu uu uu");
@@ -107,16 +141,36 @@ public class Server_Controller implements Controller{
 			}
 		}
 	}
+	/**
+	 * Benachrichtigt alle Über änderungen
+	 * @param id
+	 */
 	public void signalall(int id){
 		for(int i = 0; i < clients.size();i++){
 			clients.get(i).sendMessage("/nn " + id + " "+ clients.get(id).getUName());
 		}
 	}
+	/**
+	 * Gibt ClientNamen zurück
+	 * @param id
+	 * @return
+	 */
 	public String getClientName(int id){
 		return clients.get(id).getUName();
 	}
+	/**
+	 * Gibt die anzahl an CLients zurück
+	 * @return
+	 */
 	public int getCleintLe(){return clients.size();}
+	/**
+	 * gibt die Clients zurück
+	 * @return
+	 */
 	public ArrayList<Server_Conection> getClients(){return clients;}
+	/**
+	 * Aktualisiert die GUI
+	 */
 	public void guiUpdate(){
 		sg.clearList();
 		for(int i = 0; i < clients.size(); i++){
@@ -139,6 +193,10 @@ public class Server_Controller implements Controller{
 			System.out.println("No valid Ipaddress or port\n <port> | Serverport angeben \n d | default werte verwenden (1234)");
 		
 	}
+	/**
+	 * Kickt User
+	 * @param name
+	 */
 	public void kick(String name){
 		for(int i = 0; i < clients.size(); i++){
 			if(clients.get(i).getUName() == name){
@@ -147,6 +205,9 @@ public class Server_Controller implements Controller{
 			}
 		}
 	}
+	/**
+	 * Reagiert auf Tastenanschlag
+	 */
 	@Override
 	public void keyEvent() {
 		if(sg.getInput() != "")
@@ -161,6 +222,9 @@ public class Server_Controller implements Controller{
 		}
 		sg.setInput("");
 	}
+	/**
+	 * Reagiert auf Button druck
+	 */
 	@Override
 	public void selectEvent(int id) {
 		switch (id) {
@@ -180,6 +244,9 @@ public class Server_Controller implements Controller{
 		break;
 		}
 	}
+	/**
+	 * Trennt
+	 */
 	@Override
 	public void disconect() {
 		this.sendAll("d", "/exit ");

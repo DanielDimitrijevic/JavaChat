@@ -8,7 +8,11 @@ import Interfaces.GUI;
 import Listeners.KeyListener;
 import Listeners.SelListener;
 import Listeners.WindowListener;
-
+/**
+ * Client Controller ermögtlich komunikation zwischen GUI und Conection
+ * @author Dominik, Daniel
+ *
+ */
 public class Client_Controller implements Controller{
 	private Client_GUI cg;
 	private Client_Conection cc;
@@ -17,7 +21,11 @@ public class Client_Controller implements Controller{
 	private WindowListener wl;
 	private String addr;
 	private int port;
-	
+	/**
+	 * KOnstruktor mit Server addresse und port
+	 * @param addr
+	 * @param port
+	 */
 	public Client_Controller(String addr , int port){
 		this.addr = addr;
 		this.port = port;
@@ -27,7 +35,11 @@ public class Client_Controller implements Controller{
 		cg = new Client_GUI(this,kl,sl,wl);
 		cg.open();
 	}
-	
+	/**
+	 * Handle entscheidet was gmit eingehenden Nachrichten gemacht werden soll
+	 * @param id
+	 * @param msg
+	 */
 	public void handle(int id, String msg){
 		if(msg.charAt(0) == '/'){
 			String [] s =msg.split(" ",3);
@@ -48,16 +60,29 @@ public class Client_Controller implements Controller{
 			cg.addMessage(msg);
 		}
 	}
+	/**
+	 * Sendet Messages
+	 * @param msg zu sendente Massage
+	 */
 	public void sendMessage(String msg){
 		cc.sendMessage(msg);
 	}
+	/**
+	 * Verbindet mit Server
+	 */
 	public void conect(){
 		cc = new Client_Conection(addr,port,this);
 	}
+	/**
+	 * Fordert die Trennung vom server an
+	 */
 	public void disconect(){
 		if(cc != null)
 		cc.sendMessage("/exit Conection");
 	}
+	/**
+	 * Trennt die Verbindung vom Server
+	 */
 	public void disconecte(){
 		cc.stopCom();
 		cc = null;
@@ -77,7 +102,9 @@ public class Client_Controller implements Controller{
 			System.out.println("No valid Ipaddress or port\n <Ipaddress> <port> | Server Addresse und den Serverport angeben \n d | default werte verwenden (localhost:1234)");
 		
 	}
-
+	/**
+	 * Gibt an was geshieht wenn Eine Taste gedrückt wurde
+	 */
 	@Override
 	public void keyEvent() {
 		if(cg.getInput() != "")
@@ -88,7 +115,9 @@ public class Client_Controller implements Controller{
 			cg.setInput("");
 		}
 	}
-
+	/**
+	 * Gibt an was geschieht wenn ein Butten gedrückt wird
+	 */
 	@Override
 	public void selectEvent(int id) {
 		switch (id) {

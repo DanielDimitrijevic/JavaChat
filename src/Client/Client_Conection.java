@@ -8,7 +8,12 @@ public class Client_Conection extends Thread{
 	private BufferedReader  streamIn   = null;
 	private PrintWriter streamOut = null;
 	private Client_Controller cc;
-
+	/**
+	 * Konstruktor
+	 * @param serverName Server addresse
+	 * @param serverPort Server Port
+	 * @param cc Controller um mit ihm comonizieren zu können
+	 */
 	public Client_Conection(String serverName, int serverPort, Client_Controller cc){
 		super();
 		this.cc = cc;
@@ -23,6 +28,10 @@ public class Client_Conection extends Thread{
 			System.out.println("Unexpected exception: " + ioe.getMessage());
 		}
     }
+	/**
+	 * Startet die Verbindung
+	 * @throws IOException
+	 */
 	public void startCon() throws IOException{
 		streamIn   = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		streamOut = new PrintWriter(socket.getOutputStream(), true);
@@ -30,7 +39,9 @@ public class Client_Conection extends Thread{
 		
 	}
 	
-	
+	/**
+	 * TRennt die Verbindung
+	 */
 	public void stopCom(){
 		try{
 			if (streamIn   != null)  streamIn.close();
@@ -41,7 +52,10 @@ public class Client_Conection extends Thread{
 			System.out.println("Error closing ...");
 		}
 	}
-	
+	/**
+	 * Sendet Nachrichten
+	 * @param msg zu sendende Nachricht
+	 */
 	public void sendMessage(String msg){
 		try{
 			streamOut.print(msg + "\n");
@@ -50,7 +64,9 @@ public class Client_Conection extends Thread{
 			System.err.println(e.getMessage());
 		}
 	}
-	
+	/**
+	 * Thread zum empfangen von Nachrichten
+	 */
 	@Override
 	public void run() {
 		System.out.println("Client Thread  running.");

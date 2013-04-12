@@ -43,7 +43,13 @@ public class Client_GUI  implements GUI{
 	private String chatt;
 	private ArrayList<String> clients = new ArrayList<String>();
 	private boolean chata = false, lista = false, disex = false;
-	
+	/**
+	 * Konstruktor mit Controller und Listener
+	 * @param c
+	 * @param kl
+	 * @param sl
+	 * @param wl
+	 */
 	public Client_GUI(Client_Controller c, KeyListener kl, SelListener sl,WindowListener wl){
 		this.c = c;
 		this.kl = kl;
@@ -167,23 +173,34 @@ public class Client_GUI  implements GUI{
 		this.discon();
 		sh.open();
 	}
-
+	/**
+	 * Gibt den Inhalt des Eingabefelds zurück
+	 */
 	@Override
 	public String getInput() {
 		return input.getText();
 	}
-
+	/**
+	 * Setzt den Inhalt des Eingabe felds
+	 */
 	@Override
 	public void setInput(String t) {
 		input.setText(t);
 		
 	}
-	
+	/**
+	 * Fügt eine Nachricht zum Chat fenster hinzu
+	 * @param msg
+	 */
 	public void addMessage(String msg){
 		chatt += msg + "\n";
 		chata=true;
 	}
-	
+	/**
+	 * Fugt User in Liste Hinzu
+	 * @param id
+	 * @param name
+	 */
 	public void addUser(int id,String name){
 		if(clients.size() > id){
 			if(clients.get(id) != name){
@@ -194,17 +211,25 @@ public class Client_GUI  implements GUI{
 		}
 		lista=true;
 	}
-	
+	/**
+	 * Löscht User in Liste
+	 * @param name
+	 */
 	public void remUser(String name){
 		clients.remove(name);
 		lista=true;
 	}
+	/**
+	 * Löscht die Liste
+	 */
 	public void clearList(){
 		clients.clear();
 		lista = true;
 	}
 	
-	
+	/**
+	 * Trennen der Vebindung
+	 */
 	public void discon(){
 		discon.setEnabled(false);
 		conect.setEnabled(true);
@@ -218,6 +243,9 @@ public class Client_GUI  implements GUI{
 		chatt = "";
 		clients.clear();
 	}
+	/**
+	 * Verbundung aufbauen
+	 */
 	public void con(){
 		discon.setEnabled(true);
 		conect.setEnabled(false);
@@ -226,9 +254,17 @@ public class Client_GUI  implements GUI{
 		input.setEditable(true);
 		send.setEnabled(true);
 	}
+	/**
+	 * Gibt den INhalt des Namensfeldes Zurück
+	 * @return
+	 */
 	public String getName(){
 		return name.getText();
 	}
+	/**
+	 * Setzt Die TextFarbe
+	 * @param c
+	 */
 	public void setColor(Color c){
 		chat.setForeground(c);
 		input.setForeground(c);
@@ -238,6 +274,9 @@ public class Client_GUI  implements GUI{
 	public void diconex(){
 		disex = true;
 	}
+	/**
+	 * Öffnet das Fenster
+	 */
 	public void open() {
 		
 		while (!sh.isDisposed () ) {

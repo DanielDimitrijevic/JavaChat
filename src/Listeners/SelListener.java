@@ -4,13 +4,23 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 import Interfaces.Controller;
-
+/**
+ * Listener der Anschlägt wenn ein Butten gedrückt wurde
+ * @author Dominik
+ *
+ */
 public class SelListener extends SelectionAdapter{
 	private Controller c;
+	/**
+	 * KOnstruktor
+	 * @param c
+	 */
 	public SelListener(Controller c){
 		this.c = c;
 	}
-	
+	/**
+	 * Schlägt an wenn ein Button gedrückt wurde
+	 */
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		//System.out.println(e.toString());

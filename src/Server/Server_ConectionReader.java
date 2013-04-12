@@ -4,12 +4,20 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
+/**
+ * Wartet auf Verbindungsanfragen von Clients
+ * @author Dominik
+ *
+ */
 public class Server_ConectionReader implements Runnable{
 	private Server_Controller sc;
 	private ServerSocket server = null;
 	private Thread       thread = null;
-	
+	/**
+	 * KOntroller
+	 * @param sc
+	 * @param port
+	 */
 	public Server_ConectionReader(Server_Controller sc,int port){
 		this.sc = sc;
 		try{  
@@ -21,6 +29,9 @@ public class Server_ConectionReader implements Runnable{
 			System.out.println("Can not bind to port " + port + ": " + ioe.getMessage()); 
 		}
 	}
+	/**
+	 * Watet auf Anfragen
+	 */
 	@Override
 	public void run(){  
 		while (thread != null){
@@ -34,12 +45,18 @@ public class Server_ConectionReader implements Runnable{
 			}
 		}
    }
+	/**
+	 * Startet den Thread
+	 */
    public void start()  {
 	   if (thread == null){
 		   thread = new Thread(this); 
 	       thread.start();
 	   }
    }
+   /**
+    * Stopt den Thread
+    */
    public void stop()   {
 	   if (thread != null){
 		   thread.interrupt();
