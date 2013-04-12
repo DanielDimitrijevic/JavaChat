@@ -80,6 +80,7 @@ public class Client_Controller implements Controller{
 
 	@Override
 	public void keyEvent() {
+		if(cg.getInput() != "")
 		if(cg.getInput().charAt(0)=='/')
 			cg.addMessage("Bite keine Befehle eingeben!");
 		else{
@@ -92,12 +93,13 @@ public class Client_Controller implements Controller{
 	public void selectEvent(int id) {
 		switch (id) {
 		case 0: {
-			if(cg.getInput().charAt(0)=='/')
-				cg.addMessage("Bite keine Befehle eingeben!");
-			else{
-				cc.sendMessage(cg.getInput());
-				cg.setInput("");
-			}
+			if(cg.getInput()!="")
+				if(cg.getInput().charAt(0)=='/')
+					cg.addMessage("Bite keine Befehle eingeben!");
+				else{
+					cc.sendMessage(cg.getInput());
+					cg.setInput("");
+				}
 		}
 		break;
 		case 1: {

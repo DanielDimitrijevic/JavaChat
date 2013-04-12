@@ -149,6 +149,7 @@ public class Server_Controller implements Controller{
 	}
 	@Override
 	public void keyEvent() {
+		if(sg.getInput() != "")
 		if(sg.getInput().charAt(0)=='/')
 			if(sg.getInput().charAt(1)=='k' && sg.getInput().charAt(2)=='i' && sg.getInput().charAt(3)=='c' && sg.getInput().charAt(4)=='k' && sg.getInput().charAt(5)==' ')
 				this.kick(sg.getInput().split(" ", 2)[1]);
@@ -164,16 +165,17 @@ public class Server_Controller implements Controller{
 	public void selectEvent(int id) {
 		switch (id) {
 		case 0: {
-			if(sg.getInput().charAt(0)=='/')
-				if(sg.getInput().charAt(1)=='k' && sg.getInput().charAt(2)=='i' && sg.getInput().charAt(3)=='c' && sg.getInput().charAt(4)=='k' && sg.getInput().charAt(5)==' ')
-					this.kick(sg.getInput().split(" ", 2)[1]);
-				else	
-					sg.addMessage("Bite keine Befehle eingeben!" ,"Error");
-			else{
-				this.sendAll(sg.getInput(), "Server");
-				sg.addMessage(sg.getInput(), "Server");
-				sg.setInput("");
-			}
+			if(sg.getInput() != "")
+				if(sg.getInput().charAt(0)=='/')
+					if(sg.getInput().charAt(1)=='k' && sg.getInput().charAt(2)=='i' && sg.getInput().charAt(3)=='c' && sg.getInput().charAt(4)=='k' && sg.getInput().charAt(5)==' ')
+						this.kick(sg.getInput().split(" ", 2)[1]);
+					else	
+						sg.addMessage("Bite keine Befehle eingeben!" ,"Error");
+				else{
+					this.sendAll(sg.getInput(), "Server");
+					sg.addMessage(sg.getInput(), "Server");
+					sg.setInput("");
+				}
 		}
 		break;
 		}
