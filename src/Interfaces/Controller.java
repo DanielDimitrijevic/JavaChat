@@ -1,7 +1,7 @@
 package Interfaces;
 /**
  * INterface um anzugeben was ein Controller Beinhalten muss
- * @author Dominik
+ * @author Dominik, DImitrijevic
  *
  */
 public interface Controller {

@@ -7,7 +7,7 @@ import org.eclipse.swt.events.ShellEvent;
 import Interfaces.Controller;
 /**
  * Listener der Aktiviert wird wenn das Fenster geschlossen wird
- * @author Dominik
+ * @author Dominik, Dimitrijevic
  *
  */
 public class WindowListener extends ShellAdapter{

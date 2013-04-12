@@ -6,7 +6,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import Interfaces.Controller;
 /**
  * Listener der Anschlägt wenn ein Butten gedrückt wurde
- * @author Dominik
+ * @author Dominik, Dimitrijevic
  *
  */
 public class SelListener extends SelectionAdapter{

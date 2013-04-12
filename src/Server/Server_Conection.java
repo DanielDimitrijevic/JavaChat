@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 /**
  * Baut Verbindungen Mit Clients Auf
- * @author Dominik
+ * @author Dominik,Dimitrijevic
  *
  */
 public class Server_Conection  extends Thread{

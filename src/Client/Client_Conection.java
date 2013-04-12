@@ -2,7 +2,11 @@ package Client;
 
 import java.net.*;
 import java.io.*;
-
+/**
+ * Erstellt Connection für den Client
+ * @author Dominik, Dimitrijevic
+ *
+ */
 public class Client_Conection extends Thread{
 	private Socket socket              = null;
 	private BufferedReader  streamIn   = null;

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 /**
  * Totengräber trennt verbindungen zu Clients
- * @author Dominik
+ * @author Dominik, Dimitrijevic
  *
  */
 public class Totengraeber extends Thread{

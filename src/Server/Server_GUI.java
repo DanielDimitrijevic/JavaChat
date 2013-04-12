@@ -21,7 +21,7 @@ import Listeners.WindowListener;
 
 /**
  * GUI
- * @author Dominik
+ * @author Dominik, Dimitrijevic
  *
  */
 public class Server_GUI  implements GUI{

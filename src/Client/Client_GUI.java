@@ -25,7 +25,11 @@ import Listeners.WindowListener;
 
 import org.eclipse.swt.widgets.Label;
 //import org.eclipse.wb.swt.SWTResourceManager;
-
+/**
+ * Gui für den Client des JavaChats
+ * @author Dominik, Dimitrijevic
+ *
+ */
 public class Client_GUI  implements GUI{
 	private Shell sh;
 	private Text input;

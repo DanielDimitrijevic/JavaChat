@@ -6,7 +6,7 @@ import java.net.Socket;
 
 /**
  * Wartet auf Verbindungsanfragen von Clients
- * @author Dominik
+ * @author Dominik,Dimitrijevic
  *
  */
 public class Server_ConectionReader implements Runnable{

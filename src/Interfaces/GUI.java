@@ -1,7 +1,7 @@
 package Interfaces;
 /**
  * Gibt an was ein GUI für methoden haben muss
- * @author Dominik
+ * @author Dominik, Dimitrijevic
  *
  */
 public interface GUI {

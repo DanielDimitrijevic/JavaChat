@@ -7,7 +7,7 @@ import org.eclipse.swt.events.KeyEvent;
 import Interfaces.Controller;
 /**
  * Listener schlägt an wenn eine Taste gedrückt wurde
- * @author Dominik
+ * @author Dominik, Dimitrijevic
  *
  */
 public class KeyListener extends KeyAdapter{

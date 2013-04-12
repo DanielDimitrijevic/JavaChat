@@ -10,7 +10,7 @@ import Listeners.SelListener;
 import Listeners.WindowListener;
 /**
  * Erlabut die Komunkation von Controller und GUI
- * @author Dominik
+ * @author Dominik, Dimitrijevic
  *
  */
 public class Server_Controller implements Controller{
